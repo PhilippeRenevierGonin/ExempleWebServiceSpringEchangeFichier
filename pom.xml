@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.0.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>fr.uca.iut.prg</groupId>
+	<artifactId>demofichier</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>demofichier</name>
+	<description>Demo project for Spring Boot</description>
+	<properties>
+		<java.version>17</java.version>
+	</properties>
+	<dependencies>
+
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>server</id>
+						<phase>package</phase>
+						<configuration>
+							<finalName>server</finalName>
+							<mainClass>fr.uca.iut.prg.demofichier.server.DemofichierApplication</mainClass>
+							<outputDirectory>target/server</outputDirectory>
+							<classifier>1</classifier>
+						</configuration>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>client</id>
+						<phase>package</phase>
+						<configuration>
+							<finalName>client</finalName>
+							<mainClass>fr.uca.iut.prg.demofichier.consumer.Client</mainClass>
+							<outputDirectory>target/client</outputDirectory>
+							<classifier>1</classifier>
+						</configuration>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>fr.uca.iut.prg.demofichier.server.DemofichierApplication</mainClass>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>

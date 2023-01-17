@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>upload</title>
+</head>
+<body>
+
+<fieldset>
+    <legend>upload (Router / Handler) (1 fichier)</legend>
+    <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
+        <label >Fichier : </label> <input type="file" name="fileToUpload" id="fileToUpload">
+        <button type="submit">uploader</button>
+    </form>
+</fieldset>
+
+
+
+<fieldset>
+    <legend>upload (Router / Handler) (plusieurs fichiers)</legend>
+    <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data">
+        <label >Fichiers : </label> <input type="file" name="fileToUpload" id="fileToUpload" multiple="multiple">
+        <button type="submit">uploader</button>
+    </form>
+</fieldset>
+
+
+<!--
+<fieldset>
+    <legend>upload2 (@RestController - mvc uniquement)</legend>
+    <form action="http://localhost:8080/uploadRest" method="post" enctype="multipart/form-data">
+        <label >Fichier : </label> <input type="file" name="fileToUpload" id="fileToUpload">
+        <button type="submit">uploader</button>
+    </form>
+</fieldset>
+-->
+
+<fieldset>
+    <legend>upload2 (@RestController)  (1 fichier)</legend>
+    <form action="http://localhost:8080/upload2" method="post" enctype="multipart/form-data">
+        <label >Fichier : </label> <input type="file" name="fileToUpload" id="fileToUpload">
+        <button type="submit">uploader</button>
+    </form>
+</fieldset>
+
+
+
+<fieldset>
+    <legend>upload2multi (@RestController)  (plusieurs fichiers)</legend>
+    <form action="http://localhost:8080/upload2multi" method="post" enctype="multipart/form-data">
+        <label >Fichiers : </label> <input type="file" name="fileToUpload" id="fileToUpload" multiple="multiple">
+        <button type="submit">uploader</button>
+    </form>
+</fieldset>
+
+
+
+
+
+</body>
+</html>
