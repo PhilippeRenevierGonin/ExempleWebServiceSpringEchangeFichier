@@ -74,7 +74,6 @@ public class UploadController {
 
     @PostMapping("upmulti2")
     public Flux<String> uploadMulti(@RequestPart("fileToUpload") Flux<FilePart> file, @RequestPart("lang") String lang){
-        System.out.println(lang);
         File langDir = new File(lang);
         if (langDir.exists()) {
             if (! langDir.isDirectory()) return Flux.just("la langue spécifiée pose soucis");

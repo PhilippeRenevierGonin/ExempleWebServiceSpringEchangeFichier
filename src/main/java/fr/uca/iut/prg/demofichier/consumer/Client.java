@@ -33,8 +33,10 @@ public class Client {
 			System.out.println(client.sendMulti("/upload2multi","/otherfile2.txt", "/anotherfile2.txt").block());
 
 			System.out.println("************************** envoi de plusieurs fichiers + lang **************************************");
-			System.out.println(client.sendMultiLang( "/upmulti", "fr", "/otherfile.txt", "/anotherfile.txt", "/application.properties").block());
-			System.out.println(client.sendMultiLang( "/upmulti2", "fr", "/otherfile2.txt", "/anotherfile2.txt").block());
+			System.out.println(client.sendMultiLang( "/upmulti", "azerty", "/otherfile.txt", "/anotherfile.txt", "/application.properties").block());
+			System.out.println(client.sendMultiLang( "/upmulti", "aa", "/otherfile.txt", "/anotherfile.txt", "/application.properties").block());
+			System.out.println(client.sendMultiLang( "/upmulti2", "en", "/otherfile2.txt", "/anotherfile2.txt").block());
+			System.out.println(client.sendMultiLang( "/upmulti2", "bb", "/otherfile2.txt", "/anotherfile2.txt").block());
 		};
 	}
 
