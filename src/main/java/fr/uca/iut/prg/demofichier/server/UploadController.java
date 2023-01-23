@@ -9,11 +9,14 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 
 
 @RestController
@@ -64,6 +67,26 @@ public class UploadController {
     @PostMapping("upload2multi")
     public Flux<String> upload(@RequestPart("fileToUpload") Flux<FilePart> file){
         return  file.flatMap(fp -> fp.transferTo(Paths.get(fp.filename())).then(Mono.just("upload fait... "+fp.filename())));
+
+    }
+
+
+
+    @PostMapping("upmulti2")
+    public Flux<String> uploadMulti(@RequestPart("fileToUpload") Flux<FilePart> file, @RequestPart("lang") String lang){
+        System.out.println(lang);
+        File langDir = new File(lang);
+        if (langDir.exists()) {
+            if (! langDir.isDirectory()) return Flux.just("la langue spécifiée pose soucis");
+        }
+        else {
+            try {
+                Files.createDirectories(Paths.get(lang));
+            } catch (IOException e) {
+                return  Flux.just(Arrays.toString(e.getStackTrace()));
+            }
+        }
+        return  file.flatMap(fp -> fp.transferTo(Paths.get(lang+"/"+fp.filename())).then(Mono.just("upload fait... "+lang+"/"+fp.filename()+"\n")));
 
     }
 }

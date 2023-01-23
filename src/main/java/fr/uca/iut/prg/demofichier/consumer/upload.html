@@ -25,6 +25,18 @@
 </fieldset>
 
 
+
+<fieldset>
+    <legend>upload (Router / Handler) (seule l'action change) + langue</legend>
+    <form action="http://localhost:8080/upmulti" method="post" enctype="multipart/form-data">
+        <label >langue : </label> <input type="text" name="lang" id="lang">
+        <label >Fichiers : </label> <input type="file" name="fileToUpload" id="fileToUpload" multiple="multiple">
+        <button type="submit">uploader</button>
+    </form>
+</fieldset>
+
+
+
 <!--
 <fieldset>
     <legend>upload2 (@RestController - mvc uniquement)</legend>
@@ -54,7 +66,14 @@
 </fieldset>
 
 
-
+<fieldset>
+    <legend>upload (@RestController) + langue</legend>
+    <form action="http://localhost:8080/upmulti2" method="post" enctype="multipart/form-data">
+        <label >langue : </label> <input type="text" name="lang" id="lang">
+        <label >Fichiers : </label> <input type="file" name="fileToUpload" id="fileToUpload" multiple="multiple">
+        <button type="submit">uploader</button>
+    </form>
+</fieldset>
 
 
 </body>

@@ -21,7 +21,8 @@ public class UploadRouter {
 	public RouterFunction<ServerResponse> route(UploadHandler uploadHandler) {
 
 		return RouterFunctions
-			.route(POST("/upload").and(accept(MediaType.MULTIPART_FORM_DATA)), uploadHandler::upload);
+			.route(POST("/upload").and(accept(MediaType.MULTIPART_FORM_DATA)), uploadHandler::upload)
+			.andRoute(POST("/upmulti").and(accept(MediaType.MULTIPART_FORM_DATA)), uploadHandler::uploadmulti);
 
 	}
 }

@@ -14,6 +14,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
+import java.nio.channels.MembershipKey;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,10 +53,35 @@ public class FileUploader {
 
     protected MultiValueMap<String, HttpEntity<?>> fromFiles(String... s) {
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
+        /*
+        for (int i = 0; i < s.length; i++) {
+            File toBeSent = new File(getClass().getResource(s[i]).getFile());
+            builder.part("fileToUpload", new ClassPathResource(toBeSent.getName()));
+        }*/
+        complete(builder, s); // pour éviter la duplication de code
+        return builder.build();
+    }
+
+
+
+    public Mono<String> sendMultiLang(String url, String lang, String... s) {
+        Mono<String> response = client.post().uri(url).contentType(MediaType.MULTIPART_FORM_DATA)
+                .body(BodyInserters.fromMultipartData(fromFilesWithLang(lang, s)))
+                .exchange().then(Mono.just("sent..."));
+        return response;
+    }
+
+    private MultiValueMap<String,?> fromFilesWithLang(String lang, String[] s) {
+        MultipartBodyBuilder builder = new MultipartBodyBuilder();
+        builder.part("lang", lang);
+        complete(builder, s);
+        return builder.build();
+    }
+
+    private void complete(MultipartBodyBuilder builder, String[] s) {
         for (int i = 0; i < s.length; i++) {
             File toBeSent = new File(getClass().getResource(s[i]).getFile());
             builder.part("fileToUpload", new ClassPathResource(toBeSent.getName()));
         }
-        return builder.build();
     }
 }
