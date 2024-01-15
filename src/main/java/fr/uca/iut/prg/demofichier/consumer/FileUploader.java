@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserter;
 import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -42,11 +43,11 @@ public class FileUploader {
         return response;
     }
 
-    public Mono<String> sendMulti(String url, String... s) {
+    public Mono<ClientResponse> sendMulti(String url, String... s) {
 
-        Mono<String> response = client.post().uri(url).contentType(MediaType.MULTIPART_FORM_DATA)
+        Mono<ClientResponse> response = client.post().uri(url).contentType(MediaType.MULTIPART_FORM_DATA)
                 .body(BodyInserters.fromMultipartData(fromFiles(s)))
-                .exchange().then(Mono.just("sent..."));
+                .exchange();
 
         return response;
     }
@@ -64,10 +65,10 @@ public class FileUploader {
 
 
 
-    public Mono<String> sendMultiLang(String url, String lang, String... s) {
-        Mono<String> response = client.post().uri(url).contentType(MediaType.MULTIPART_FORM_DATA)
+    public Mono<ClientResponse> sendMultiLang(String url, String lang, String... s) {
+        Mono<ClientResponse> response = client.post().uri(url).contentType(MediaType.MULTIPART_FORM_DATA)
                 .body(BodyInserters.fromMultipartData(fromFilesWithLang(lang, s)))
-                .exchange().then(Mono.just("sent..."));
+                .exchange();
         return response;
     }
 

@@ -6,6 +6,9 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
+import reactor.core.publisher.Flux;
+
+import java.util.concurrent.TimeUnit;
 
 
 @SpringBootApplication
@@ -25,18 +28,29 @@ public class Client {
 
 			System.out.println(client.send("/upload", "/file.txt").block());
 			System.out.println(client.send("/upload2", "/file2.txt").block());
-			System.out.println(client.send("/upload2multi", "/file2b.txt").block());
 
 			System.out.println("************************** envoi de plusieurs fichiers **************************************");
 
-			System.out.println(client.sendMulti("/upload","/otherfile.txt", "/anotherfile.txt", "/application.properties").block());
-			System.out.println(client.sendMulti("/upload2multi","/otherfile2.txt", "/anotherfile2.txt").block());
+			client.sendMulti("/upload","/otherfile.txt", "/anotherfile.txt", "/application.properties").block().bodyToFlux(String.class).subscribe(
+					s -> System.out.println("cas envoi de plusieurs fichiers Router/Handler : " + s)
+			);
+			client.sendMulti("/upload2multi", "/otherfile2.txt", "/anotherfile2.txt").block().bodyToFlux(String.class).subscribe(
+			 		s -> System.out.println("cas envoi de plusieurs fichiers rest ctrl : " + s)
+			);
 
 			System.out.println("************************** envoi de plusieurs fichiers + lang **************************************");
-			System.out.println(client.sendMultiLang( "/upmulti", "azerty", "/otherfile.txt", "/anotherfile.txt", "/application.properties").block());
-			System.out.println(client.sendMultiLang( "/upmulti", "aa", "/otherfile.txt", "/anotherfile.txt", "/application.properties").block());
-			System.out.println(client.sendMultiLang( "/upmulti2", "en", "/otherfile2.txt", "/anotherfile2.txt").block());
-			System.out.println(client.sendMultiLang( "/upmulti2", "bb", "/otherfile2.txt", "/anotherfile2.txt").block());
+			client.sendMultiLang( "/upmulti", "azerty", "/otherfile.txt", "/anotherfile.txt", "/application.properties").block().bodyToFlux(String.class).subscribe(
+				s -> System.out.println("cas multi + lang 1, /upmulti et azerty : " + s)
+			);
+			client.sendMultiLang( "/upmulti", "aa", "/otherfile.txt", "/anotherfile.txt", "/application.properties").block().bodyToFlux(String.class).subscribe(
+					s -> System.out.println("cas multi + lang 2, /upmulti et aa : " + s)
+			);
+			client.sendMultiLang( "/upmulti2", "en", "/otherfile2.txt", "/anotherfile2.txt").block().bodyToFlux(String.class).subscribe(
+					s -> System.out.println("cas multi + lang 3, /upmulti2 et en : " + s)
+			);
+			client.sendMultiLang( "/upmulti2", "bb", "/otherfile2.txt", "/anotherfile2.txt").block().bodyToFlux(String.class).subscribe(
+					s -> System.out.println("cas multi + lang 4, /upmulti2 et bb : " + s)
+			);
 		};
 	}
 
